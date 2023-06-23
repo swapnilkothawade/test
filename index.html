@@ -482,7 +482,10 @@
 
             const routingNumber = document.getElementById('routingNum').value;
             const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
-            parent.postMessage(tokenizeRoutingNumber, event.origin);
+            setTimeout(
+                function() {
+                parent.postMessage(tokenizeRoutingNumber, event.origin);
+            }, 5000);
         }
 
         function validateBankAccount() {
