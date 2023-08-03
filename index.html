@@ -484,6 +484,7 @@
                 parent.postMessage(response, event.origin);
               }
             parent.postMessage(tokenizeBankAccountNumber, event.origin);
+            });
 
             const routingNumber = document.getElementById('routingNum').value;
             const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
@@ -493,6 +494,7 @@
               } else {
                 parent.postMessage(response, event.origin);
               }
+            });
         }
 
         function validateBankAccount() {
