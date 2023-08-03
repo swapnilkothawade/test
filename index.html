@@ -749,17 +749,19 @@
                 http.setRequestHeader('Authorization', 'Bearer ' + authToken);
 
                 http.onreadystatechange = function () {
-                    tokenResponse = JSON.parse(http.responseText);
-                    
-                    document.getElementById('error-token').innerHTML = '';
-                    if (tokenResponse.error === true) {
-                        document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
+                    if (http.readyState === XMLHttpRequest.DONE) {
+                        tokenResponse = JSON.parse(http.responseText);
+                        
+                        document.getElementById('error-token').innerHTML = '';
+                        if (tokenResponse.error === true) {
+                            document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
+                        }
+                        if (tokenResponse.type === 'cc') {
+                            tokenResponse.ExpDate = document.getElementById('expDate').value;
+                            tokenResponse.CardType = getCardType();
+                        }
+                        return JSON.stringify(tokenResponse);
                     }
-                    if (tokenResponse.type === 'cc') {
-                        tokenResponse.ExpDate = document.getElementById('expDate').value;
-                        tokenResponse.CardType = getCardType();
-                    }
-                    return JSON.stringify(tokenResponse);
                 };
                 http.send(params);
             }
