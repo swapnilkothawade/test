@@ -767,6 +767,7 @@
                         document.getElementById('error-token').innerHTML = '';
                         if (tokenResponse.error === true) {
                             document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
+                            callback(tokenResponse.error, null);
                         }
                         if (tokenResponse.type === 'cc') {
                             tokenResponse.ExpDate = document.getElementById('expDate').value;
