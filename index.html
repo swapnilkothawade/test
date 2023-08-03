@@ -486,7 +486,6 @@
             });
 
             const routingNumber = document.getElementById('routingNum').value;
-            const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
             executeMWPost(routingNumber, 'routingnumber', event.data, function (error, response) {
               if (error) {
                 console.error('An error occurred:', error);
