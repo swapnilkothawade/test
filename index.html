@@ -1,12 +1,12 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="-1">
-  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+    <style>
     @font-face {
         font-family: 'Source Sans Pro';
         src: url('./fonts/EOT/SourceSansPro-Light.eot') format('embedded-opentype'), url('./fonts/WOFF/OTF/SourceSansPro-Light.otf.woff') format('woff'), url('./fonts/OTF/SourceSansPro-LightIt.otf') format('opentype'), url('./fonts/TTF/SourceSansPro-Light.ttf') format('truetype');
@@ -329,717 +329,770 @@
 
 </head>
 
-<body id="body">
-  <span id='error-token' class='inputError'></span>
-  <div id='creditCard'>
-    <div class='col-50'>
-      <div class="row">
-        <label for='fname'>Accepted Cards</label>
-        <div id='fname' class="card-corral">
-          <img id='visa' src='visa_logo.png' alt='Visa' class="conceal">
-          <img id='master' src='master_logo.png' alt='Mastercard' class="conceal">
-          <img id='discover' src='discover_logo.jpg' alt='Discover' class="conceal">
+<body id="body" class="mdrn shftr">
+    <span id="error-token" class="inputError"></span>
+    <div id="creditCard" style="display: block;">
+        <div class="col-50">
+            <div class="row">
+                <label for="fname">Accepted Cards</label>
+                <div id="fname" class="card-corral">
+                    <img id="visa" src="visa_logo.png" alt="Visa" class="conceal">
+                    <img id="master" src="master_logo.png" alt="Mastercard" class="conceal">
+                    <img id="discover" src="discover_logo.jpg" alt="Discover" class="conceal">
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="ccnum">Credit Card number</label>
+                <input type="text" id="ccnum" class="cc twiwae-invalid" name="cardnumber"
+                    placeholder="1111-2222-3333-4444"
+                    onchange="clearErrors('error-card'); updateCardType(); validateCardType(); validateCardNumber(false)"
+                    onkeydown="return event.keyCode !== 69" maxlength="22">
+                <div id="error-card" class="inputError">
+                    <div>Please enter a valid Card Number</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="verifyccnum">Verify Card number</label>
+                <input type="text" id="verifyccnum" class="cc twiwae-invalid" name="verifycardnumber"
+                    placeholder="1111-2222-3333-4444"
+                    onchange="clearErrors('error-verify-card'); validateCardType('verifyccnum','error-verify-card'); validateCardNumber(true)"
+                    onkeydown="return event.keyCode !== 69" maxlength="22">
+                <div id="error-verify-card" class="inputError">
+                    <div>Please enter a valid Card Number</div>
+                    <div id="card-mismatch">The credit or debit card numbers you entered do not match. Please re-enter
+                        your credit or debit card number.</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="expDate">Exp. Date</label>
+                <select id="months" onchange="clearErrors('error-card-date'); setExpDate();">
+                    <option value="" disabled="" selected="">-</option>
+                    <option value="00">January</option>
+                    <option value="01">February</option>
+                    <option value="02">March</option>
+                    <option value="03">April</option>
+                    <option value="04">May</option>
+                    <option value="05">June</option>
+                    <option value="06">July</option>
+                    <option value="07">August</option>
+                    <option value="08">September</option>
+                    <option value="09">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+                <select id="years" onchange="clearErrors('error-card-date'); setExpDate();">
+                    <option value="" disabled="" selected="">-</option>
+                    <option value="23">2023</option>
+                    <option value="24">2024</option>
+                    <option value="25">2025</option>
+                    <option value="26">2026</option>
+                    <option value="27">2027</option>
+                    <option value="28">2028</option>
+                    <option value="29">2029</option>
+                    <option value="30">2030</option>
+                    <option value="31">2031</option>
+                    <option value="32">2032</option>
+                </select>
+                <input type="number" id="expDate" class="expDate" name="expDate" placeholder="MMYY"
+                    onchange="clearErrors('error-card-date'); validateCardExpDate()"
+                    onkeydown="return event.keyCode !== 69">
+                <div id="error-card-date" class="inputError"></div>
+            </div>
         </div>
-      </div>
-
-      <div class="row">
-        <label for='ccnum'>Credit Card number</label>
-        <input type='text' id='ccnum' class='cc' name='cardnumber' placeholder='1111-2222-3333-4444'
-          onchange="clearErrors('error-card'); updateCardType(); validateCardType(); validateCardNumber(false)"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-card' class='inputError'></div>
-      </div>
-
-      <div class="row">
-        <label for='verifyccnum'>Verify Card number</label>
-        <input type='text' id='verifyccnum' class='cc' name='verifycardnumber' placeholder='1111-2222-3333-4444'
-          onchange="clearErrors('error-verify-card'); validateCardType('verifyccnum','error-verify-card'); validateCardNumber(true)"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-verify-card' class='inputError'></div>
-      </div>
-
-      <div class="row">
-        <label for='expDate'>Exp. Date</label>
-        <select id='months' onchange="clearErrors('error-card-date'); setExpDate();">
-          <option value='' disabled selected>-</option>
-        </select>
-        <select id='years' onchange="clearErrors('error-card-date'); setExpDate();">
-          <option value='' disabled selected>-</option>
-        </select>
-        <input type='number' id='expDate' class='expDate' name='expDate' placeholder='MMYY'
-          onchange="clearErrors('error-card-date'); validateCardExpDate()" onkeydown='return event.keyCode !== 69'>
-        <div id='error-card-date' class='inputError'></div>
-      </div>
     </div>
-  </div>
-  <div id='EFT'>
-    <div class='col-50'>
-      <div class="row">
-        <label for='routingNum'>Routing #</label>
-        <input type='number' id='routingNum' class='routing' name='routingNumber' placeholder='123456789'
-          onchange="clearErrors('error-route'); validateRoutingNumber(); validateMatchingRoutingNumber(false);"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-route' class='inputError'></div>
-      </div>
-      <div class="row">
-        <label for='verifyRoutingNum'>Verify Routing #</label>
-        <input type='number' id='verifyRoutingNum' class='routing' name='verifyRoutingNumber' placeholder='123456789'
-          onchange="clearErrors('error-verify-route'); validateRoutingNumber('verifyRoutingNum', 'error-verify-route'); validateMatchingRoutingNumber(true)"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-verify-route' class='inputError'></div>
-      </div>
-      <div class="row">
-        <label for='accountNum'>Bank Account #</label>
-        <input type='number' id='accountNum' class='account' name='accountName' placeholder='123456789'
-          onchange="clearErrors('error-acct'); validateAccountNumber(); validateMatchingAccountNumber(false)"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-acct' class='inputError'></div>
-      </div>
-      <div class="row">
-        <label for='verifyAccountNum'>Verify Account #</label>
-        <input type='number' id='verifyAccountNum' class='account' name='verifyaccountName' placeholder='123456789'
-          onchange="clearErrors('error-verify-acct'); validateAccountNumber('verifyAccountNum', 'error-verify-acct'); validateMatchingAccountNumber(true)"
-          onkeydown='return event.keyCode !== 69'>
-        <div id='error-verify-acct' class='inputError'></div>
-      </div>
+    <div id="EFT" style="display: none;">
+        <div class="col-50">
+            <div class="row">
+                <label for="routingNum">Routing #</label>
+                <input type="number" id="routingNum" class="routing" name="routingNumber" placeholder="123456789"
+                    onchange="clearErrors('error-route'); validateRoutingNumber(); validateMatchingRoutingNumber(false);"
+                    onkeydown="return event.keyCode !== 69">
+                <div id="error-route" class="inputError"></div>
+            </div>
+            <div class="row">
+                <label for="verifyRoutingNum">Verify Routing #</label>
+                <input type="number" id="verifyRoutingNum" class="routing" name="verifyRoutingNumber"
+                    placeholder="123456789"
+                    onchange="clearErrors('error-verify-route'); validateRoutingNumber('verifyRoutingNum', 'error-verify-route'); validateMatchingRoutingNumber(true)"
+                    onkeydown="return event.keyCode !== 69">
+                <div id="error-verify-route" class="inputError"></div>
+            </div>
+            <div class="row">
+                <label for="accountNum">Bank Account #</label>
+                <input type="number" id="accountNum" class="account" name="accountName" placeholder="123456789"
+                    onchange="clearErrors('error-acct'); validateAccountNumber(); validateMatchingAccountNumber(false)"
+                    onkeydown="return event.keyCode !== 69">
+                <div id="error-acct" class="inputError"></div>
+            </div>
+            <div class="row">
+                <label for="verifyAccountNum">Verify Account #</label>
+                <input type="number" id="verifyAccountNum" class="account" name="verifyaccountName"
+                    placeholder="123456789"
+                    onchange="clearErrors('error-verify-acct'); validateAccountNumber('verifyAccountNum', 'error-verify-acct'); validateMatchingAccountNumber(true)"
+                    onkeydown="return event.keyCode !== 69">
+                <div id="error-verify-acct" class="inputError"></div>
+            </div>
+        </div>
     </div>
-  </div>
+
+
+
+    <script type="text/javascript">
+
+        let configOpts = {};
+        let augmented = false;
+        let paymentMethod = '';
+        let resizeObv;
+        let validityObv;
+        window.addEventListener('message', receiveMessage, false);
+        function receiveMessage(event) {
+            
+            const message = JSON.parse(event.data);
+            let payMethod = message.PaymentMethod;
+            if (payMethod != null) {
+                resetFields();
+                updatePaymentFieldsShown(payMethod, augmented, event);
+                paymentMethod = payMethod;
+                if (augmented) {
+                    buildObservers(payMethod);
+                }
+            }
+            else if (message.MagicWrighterUrl != null) {
+                const type = message.Type;
+                if (type != null && type === 'ACH/EFT') {
+                    handleBankAccount(event);
+                }
+                else if (type != null && (type === 'Credit Card' || type === 'Debit Card')) {
+                    handleCard(event);
+                }
+            }
+        }
+
+        function handleBankAccount(event) {
+            if (!validateBankAccount()) {
+                return;
+            }
+
+            const accountNumber = document.getElementById('accountNum').value;
+            executeMWPost(accountNumber, 'accountnumber', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
+            });
+
+            const routingNumber = document.getElementById('routingNum').value;
+            executeMWPost(routingNumber, 'routingnumber', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
+            });
+        }
+
+        function validateBankAccount() {
+            let isValid = true;
+            if (!validateRoutingNumber() || !validateMatchingRoutingNumber(true)
+                || !validateAccountNumber() || !validateMatchingAccountNumber(true)) {
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function validateRoutingNumber(routingElementId, routingErrElementId) {
+            const routingNumberElem = routingElementId === undefined ? document.getElementById('routingNum') : document.getElementById(routingElementId);
+            const errorRoute = routingErrElementId === undefined ? document.getElementById('error-route') : document.getElementById(routingErrElementId);
+            let isValid = true;
+            let msg = '';
+            if (routingNumberElem.value.length !== 9 && (isValid || augmented)) {
+                msg = augmented ? 'Number must be a valid routing number' : 'Routing # must be a length of 9';
+                isValid = false;
+            }
+            addError(errorRoute, msg);
+            if (augmented) {
+                checkInputValidity(routingNumberElem, errorRoute);
+            }
+            return isValid;
+        }
+
+        function validateMatchingRoutingNumber(forceValidation) {
+            const routingNumberElem = document.getElementById('routingNum');
+            const verifyRoutingNumberElem = document.getElementById('verifyRoutingNum');
+            const errorRoute = augmented ? document.getElementById('error-verify-route') : document.getElementById('error-route');
+            let msg = '';
+            let isValid = true;
+            if ((forceValidation || verifyRoutingNumberElem.value !== '')
+                && routingNumberElem.value !== verifyRoutingNumberElem.value
+                && (isValid || augmented)) {
+                msg = augmented ? 'The routing numbers you entered do not match. Please re-enter your routing number.'
+                    : 'Routing # does not match.  Verify both numbers are correct.';
+                isValid = false;
+            }
+            let routingMismatch = document.getElementById('routing-mismatch');
+            if (routingMismatch !== null) {
+                routingMismatch.outerHTML = '';
+            }
+            addError(errorRoute, msg, 'routing-mismatch');
+            if (augmented) {
+                checkInputValidity(verifyRoutingNumberElem, errorRoute);
+            }
+            return isValid;
+        }
+
+        function validateAccountNumber(acctElementId, acctErrElementId) {
+            const accountNumberElem = acctElementId === undefined ? document.getElementById('accountNum') : document.getElementById(acctElementId);
+            const errorAccount = acctErrElementId === undefined ? document.getElementById('error-acct') : document.getElementById(acctErrElementId);
+            let msg = '';
+            let isValid = true;
+            if ((accountNumberElem.value.length < 4 || accountNumberElem.value.length > 17) && (isValid || augmented)) {
+                msg = augmented ? 'Number must be a valid account number' : 'Account # must be between 4 and 17 characters';
+                isValid = false;
+            }
+            addError(errorAccount, msg);
+            if (augmented) {
+                checkInputValidity(accountNumberElem, errorAccount);
+            }
+            return isValid;
+        }
+
+        function validateMatchingAccountNumber(forceValidation) {
+            const accountNumberElem = document.getElementById('accountNum');
+            const verifiedAccountNumberElem = document.getElementById('verifyAccountNum');
+            const errorAccount = augmented ? document.getElementById('error-verify-acct') : document.getElementById('error-acct');
+            let msg = '';
+            let isValid = true;
+            if ((forceValidation || verifiedAccountNumberElem.value !== '')
+                && accountNumberElem.value !== verifiedAccountNumberElem.value
+                && (isValid || augmented)) {
+                msg = augmented ? 'The account numbers you entered do not match. Please re-enter your account number.'
+                    : 'Account # does not match.  Verify both numbers are correct.';
+                isValid = false;
+            }
+            let acctMismatch = document.getElementById('acct-mismatch');
+            if (acctMismatch !== null) {
+                acctMismatch.outerHTML = '';
+            }
+            addError(errorAccount, msg, 'acct-mismatch');
+            if (augmented) {
+                checkInputValidity(verifiedAccountNumberElem, errorAccount);
+            }
+            return isValid;
+        }
+
+        function handleCard(event) {
+            if (!validateCard()) {
+                return;
+            }
+            const cardNumber = document.getElementById('ccnum').value.replace(/-/g, '');
+            executeMWPost(cardNumber, 'cc', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
+            });
+        }
+
+        function validateCard() {
+            let isValid = true;
+            if (!validateCardType() || !validateCardNumber(true) || !validateCardExpDate()) {
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function validateCardType(cardElementId, cardErrElementId) {
+            const cardNumberOrigElem = cardElementId === undefined ? document.getElementById('ccnum') : document.getElementById(cardElementId);
+            const cardNumber = cardNumberOrigElem.value.replace(/-/g, '');
+            const cardType = getCardType();
+            const errorCard = cardErrElementId === undefined ? document.getElementById('error-card') : document.getElementById(cardErrElementId);
+            let isValid = true;
+            let msg = '';
+            if (cardType === '' && (isValid || augmented)) {
+                msg = augmented ? 'Please enter a valid Card Number' : 'Card type not accepted. Accepted card types are Discover, Mastercard, and Visa.';
+                isValid = false;
+            }
+            if ((cardType === 'visa' && (cardNumber.length < 13 || cardNumber.length > 19)) && (isValid || augmented)) {
+                msg = augmented ? 'Please enter a valid Card Number' : 'Visa card # must be between 13 and 19 digits';
+                isValid = false;
+            }
+            if ((cardType === 'mastercard' && cardNumber.length !== 16) && (isValid || augmented)) {
+                msg = augmented ? 'Please enter a valid Card Number' : 'Mastercard card # must be 16 digits';
+                isValid = false;
+            }
+            if ((cardType === 'discover' && (cardNumber.length < 16 || cardNumber.length > 19)) && (isValid || augmented)) {
+                msg = augmented ? 'Please enter a valid Card Number' : 'Discover card # must between 16 and 19 digits';
+                isValid = false;
+            }
+            addError(errorCard, msg);
+            if (augmented) {
+                checkInputValidity(cardNumberOrigElem, errorCard);
+            }
+            return isValid;
+        }
+
+        function validateCardNumber(forceValidation) {
+            const cardNumberOrigElem = document.getElementById('ccnum');
+            const verifiedCardNumberOrigElem = document.getElementById('verifyccnum');
+            const cardNumber = cardNumberOrigElem.value.replace(/-/g, '');
+            const verifiedCardNumber = verifiedCardNumberOrigElem.value.replace(/-/g, '');
+            const errorCard = augmented ? document.getElementById('error-verify-card') : document.getElementById('error-card');
+            let msg = '';
+            let isValid = true;
+            if ((forceValidation || verifiedCardNumber !== '')
+                && cardNumber !== verifiedCardNumber
+                && (isValid || augmented)) {
+                msg = augmented ? 'The credit or debit card numbers you entered do not match. Please re-enter your credit or debit card number.'
+                    : 'Card # does not match.  Verify both numbers are correct.';
+                isValid = false;
+            }
+            let cardMismatch = document.getElementById('card-mismatch');
+            if (cardMismatch !== null) {
+                cardMismatch.outerHTML = '';
+            }
+            addError(errorCard, msg, 'card-mismatch');
+            if (augmented) {
+                checkInputValidity(verifiedCardNumberOrigElem, errorCard);
+            }
+            return isValid;
+        }
+        function validateCardExpDate() {
+            const expDateElem = document.getElementById('expDate');
+            const errorCardDate = document.getElementById('error-card-date');
+            const expDate = expDateElem.value;
+            let msg = '';
+            let isValid = true;
+            if ((expDate.length !== 4) && (isValid || augmented)) {
+                msg = 'Invalid expiration date. Must be 4 characters in MMYY format';
+                isValid = false;
+            }
+
+            let today, someday;
+            let exMonth = expDate.substr(0, 2);
+            if ((+exMonth > 12 || +exMonth < 1) && (isValid || augmented)) {
+                msg = 'Invalid Card Expiration Date';
+                isValid = false;
+            }
+            let exYear = + 2000 + +expDate.substr(2, 4);
+            today = new Date();
+            someday = new Date();
+            someday.setFullYear(exYear, +exMonth, 1);
+
+            if ((someday < today) && (isValid || augmented)) {
+                msg = augmented ? 'Value must be a date in the future' : 'Card has expired';
+                isValid = false;
+            }
+            addError(errorCardDate, msg);
+            if (augmented) {
+                checkInputValidity(expDateElem, errorCardDate);
+            }
+            return isValid;
+        }
+
+        function addError(elem, errMsg, errorDivId) {
+            if (errMsg === null || errMsg === '') {
+                return;
+            }
+            if (elem.hasChildNodes()) {
+                //Check to see if we already have the message
+                let array = Array.prototype.slice.call(elem.childNodes);
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i].innerHTML === errMsg) {
+                        return;
+                    }
+                }
+            }
+            let div = document.createElement('div');
+            if (errorDivId !== undefined && errorDivId !== null) {
+                div.setAttribute('id', errorDivId);
+            }
+            div.innerHTML = errMsg;
+            elem.appendChild(div);
+        }
+
+        function clearErrors(elemId) {
+            let errorsCleared = false;
+            const errElem = document.getElementById(elemId);
+            while (errElem.hasChildNodes()) {
+                errElem.removeChild(errElem.firstChild);
+                errorsCleared = true;
+            }
+        }
+
+        function checkInputValidity(elem, errorElem) {
+            const hasErrors = errorElem.hasChildNodes();
+            updateInputValidity(elem, !hasErrors);
+        }
+
+        function updateInputValidity(elem, isValid) {
+            //IE11 doesn't not have the force attribute on toggle
+            //Don't add the valid flag if there is no input (validation fields get false positives)
+            if (isValid && elem.value !== '') {
+                elem.classList.add('twiwae-valid');
+                elem.classList.remove('twiwae-invalid');
+            } else {
+                elem.classList.add('twiwae-invalid');
+                elem.classList.remove('twiwae-valid');
+            }
+        }
+
+        function executeMWPost(bankOrCardInfo, type, message, callback) {
+            const jsonMessage = JSON.parse(message);
+
+            const authToken = jsonMessage.AuthToken;
+            const billingID = jsonMessage.BillingId;
+
+            let http = new XMLHttpRequest();
+            let tokenResponse;
+
+            try {
+                let url = jsonMessage.MagicWrighterUrl;
+                const params = '{"id":"' + billingID + '","value":"' + bankOrCardInfo + '","type":"' + type + '","frequency":"annually"}';
+                http.open('POST', url, true);
+
+                //Send the proper header information along with the request
+                http.setRequestHeader('Content-type', 'application/json');
+                http.setRequestHeader('cache-control', 'no-cache');
+                http.setRequestHeader('Authorization', 'Bearer ' + authToken);
+
+                http.onreadystatechange = function () {
+                    if (http.readyState === XMLHttpRequest.DONE) {
+                        tokenResponse = JSON.parse(http.responseText);
+                        
+                        document.getElementById('error-token').innerHTML = '';
+                        if (tokenResponse.error === true) {
+                            document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
+                            callback(tokenResponse.error, null);
+                        }
+                        if (tokenResponse.type === 'cc') {
+                            tokenResponse.ExpDate = document.getElementById('expDate').value;
+                            tokenResponse.CardType = getCardType();
+                        }
+                        callback(null, JSON.stringify(tokenResponse));
+                    }
+                };
+                http.send(params);
+            }
+            catch (err) {
+                document.getElementById('error-token').innerHTML = 'Error during tokenization: ' + err.Message;
+            }
+        }
+
+        function resetFields() {
+            document.getElementById('ccnum').value = '';
+            document.getElementById('verifyccnum').value = '';
+            document.getElementById('expDate').value = '';
+            document.getElementById('routingNum').value = '';
+            document.getElementById('verifyRoutingNum').value = '';
+            document.getElementById('accountNum').value = '';
+            document.getElementById('verifyAccountNum').value = '';
+            document.getElementById('months').selectedIndex = 0;
+            document.getElementById('years').selectedIndex = 0;
+            updateCardType();
+            clearErrors('error-card');
+            clearErrors('error-verify-card');
+            clearErrors('error-card-date');
+            clearErrors('error-acct');
+            clearErrors('error-route');
+            clearErrors('error-verify-route');
+            clearErrors('error-acct');
+            clearErrors('error-verify-acct');
+        }
+
+        function updatePaymentFieldsShown(payMethod, resize, event) {
+            let cc = document.getElementById('creditCard')
+            let eft = document.getElementById('EFT');
+            switch (payMethod) {
+                case 'Debit Card':
+                case 'Credit Card':
+                    eft.style.display = 'none';
+                    cc.style.display = 'block';
+                    break;
+                case 'ACH/EFT':
+                    cc.style.display = 'none';
+                    eft.style.display = 'block';
+                    break;
+                default:
+                    cc.style.display = 'none';
+                    eft.style.display = 'none';
+                    break;
+            }
+
+            if (resize === true && augmented) {
+                sendResizeMessage(event.origin);
+            }
+        }
+
+        function sendResizeMessage(origin) {
+            const paymentBlock = document.querySelector('#body div[style="display: block;"]');
+            const divHeight = paymentBlock ? paymentBlock.offsetHeight : 0;
+            parent.postMessage({ frameHeight: divHeight }, origin);
+        }
+
+        function sendValidityMessage() {
+            let isValid = false;
+            if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
+                const validPaymentElem = document.querySelectorAll('#creditCard input.twiwae-valid');
+                isValid = validPaymentElem.length === 3;
+            } else if (paymentMethod === 'ACH/EFT') {
+                const validPaymentElem = document.querySelectorAll('#EFT input.twiwae-valid');
+                isValid = validPaymentElem.length === 4;
+            }
+            let messagePayload = { isValid: isValid };
+            if (isValid) {
+                messagePayload.accoutAbbrev = getAccountAbbreviation();
+                if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
+                    messagePayload.cardIssuer = getCardType();
+                }
+            }
+            parent.postMessage(messagePayload, document.referrer);
+        }
+
+        function sendLoadedMessage() {
+            parent.postMessage({ loaded: true }, document.referrer);
+        }
+
+        function getAccountAbbreviation() {
+            let accountNum = '';
+            switch (paymentMethod) {
+                case 'Debit Card':
+                case 'Credit Card':
+                    const accountNumTemp = document.getElementById('ccnum').value;
+                    accountNum = accountNumTemp.length > 4 ? accountNumTemp.replace(/-/g, '') : accountNumTemp;
+                    break;
+                case 'ACH/EFT':
+                    accountNum = document.getElementById('accountNum').value;
+                    break;
+                default:
+
+            }
+            return accountNum.slice(-4);
+        }
+
+        function getCardType() {
+            let cardNumber = document.getElementById('ccnum').value;
+
+            if (cardNumber.charAt(0) === '4') {
+                return 'visa';
+            }
+            else if (cardNumber.charAt(0) === '5' || cardNumber.charAt(0) === '2') {
+                return 'mastercard';
+            }
+            else if (cardNumber.charAt(0) === '6') {
+                return 'discover';
+            }
+            return '';
+        }
+
+        function isValidDomain(domain) {
+            return /.*(grnldev|grnl2dev|grnlpreprod|grnlprod)?\.((guidewire\.net$)|(grinnellmutual\.com$))/.test(domain)
+                || /(gmrconline\.com$)/.test(domain) || /(localhost\.com$)/.test(domain);
+        }
+
+        function updateCardType() {
+            const visa = document.getElementById('visa').classList;
+            const master = document.getElementById('master').classList;
+            const discover = document.getElementById('discover').classList;
+            const cardType = getCardType();
+
+            switch (cardType) {
+                case 'visa':
+                    visa.remove('conceal');
+                    master.add('conceal');
+                    discover.add('conceal');
+                    break;
+                case 'mastercard':
+                    visa.add('conceal');
+                    master.remove('conceal');
+                    discover.add('conceal');
+                    break;
+                case 'discover':
+                    visa.add('conceal');
+                    master.add('conceal');
+                    discover.remove('conceal');
+                    break;
+                default:
+                    visa.add('conceal');
+                    master.add('conceal');
+                    discover.add('conceal');
+            }
+        }
+
+        function setExpDate() {
+            const months = document.getElementById('months');
+            const years = document.getElementById('years');
+            if (months.value === '') {
+                months.selectedIndex = new Date().getMonth() + 1;
+            }
+            if (years.value === '') {
+                years.selectedIndex = 1;
+            }
+            let expDate = document.getElementById('expDate');
+            let adjMonths = +months.value + 1;
+            let expDateVal = adjMonths.toString() + years.value;
+            expDate.value = expDateVal.length !== 4 ? '0' + expDateVal : expDateVal;
+            validateCardExpDate();
+        }
+
+        if (window.location.href) {
+            const searchOptions = location.search.substring(1);
+            if (searchOptions !== undefined && searchOptions !== null && searchOptions !== '') {
+                configOpts = JSON.parse('{"' + decodeURI(searchOptions).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+                if (configOpts.augment && !!configOpts.augment) {
+                    if (configOpts.style) {
+                        const styles = configOpts.style.toString().split(',');
+                        for (var i = 0; i < styles.length; i++) {
+                            document.getElementById('body').classList.add(styles[i]);
+                        }
+                    }
+                    augmented = !!configOpts.augment;
+                    addCCMasks();
+                    updateExpDates();
+                    buildObservers();
+                    limitLengths();
+                    if (navigator.userAgent.indexOf('MSIE') > -1 || document.documentMode || navigator.userAgent.indexOf('Edge') > -1) {
+                        //We're in IE, so remove placeholders since we can't seem to style them out
+                        let inputs = document.querySelectorAll('input');
+                        for (var i = 0; i < inputs.length; i++) {
+                            inputs[i].removeAttribute('placeholder');
+                        }
+                    }
+                    sendLoadedMessage();
+                }
+            }
+        };
+
+        function addCCMasks() {
+            document.getElementById('ccnum').addEventListener('keyup', ccmask);
+            document.getElementById('verifyccnum').addEventListener('keyup', ccmask);
+        }
+
+        function ccmask(event) {
+            if (!augmented) {
+                return;
+            }
+            const ele = event.target;
+            const cursorPosition = ele.selectionStart;
+            const val = ele.value.split('-').join('');
+            if (val.length > 0) {
+                const firstPart = val.substring(0, 16);
+                const lastPart = val.substring(16);
+                const before = ele.value.length;
+                ele.value = firstPart.match(/\d{1,4}/g).join('-') + lastPart;
+                const after = ele.value.length;
+                if (before >= after) {
+                    ele.selectionStart = cursorPosition;
+                    ele.selectionEnd = cursorPosition;
+                }
+            }
+            //Edge keyup events stop onchange events from firing
+            if (navigator.userAgent.indexOf('Edge') > -1) {
+                event.target.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function limitLengths() {
+            //Limit character lengths on card entry
+            document.getElementById('ccnum').setAttribute('maxlength', '22');
+            document.getElementById('verifyccnum').setAttribute('maxlength', '22');
+        }
+
+        function updateExpDates() {
+            let months = document.getElementById('months');
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            for (var i = 0; i < monthNames.length; i++) {
+                var opt = document.createElement('option');
+                //padStart isn't supported by IE11, so we're left with this
+                if (i.toString().length === 1) {
+                    opt.value = '0' + i.toString();
+                } else {
+                    opt.value = i.toString();
+                }
+                opt.innerHTML = monthNames[i];
+                months.appendChild(opt);
+            }
+
+            let years = document.getElementById('years');
+            const currentYear = new Date().getFullYear();
+            for (var i = currentYear; i < currentYear + 10; i++) {
+                var opt = document.createElement('option');
+                opt.value = i.toString().substr(-2);
+                opt.innerHTML = i;
+                years.appendChild(opt);
+            }
+        }
+
+        function buildObservers(paymentMethod) {
+            const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+            resizeObv = new MutationObserver(resizeObserver);
+            const validityConfig = { attributes: true, attributeFilter: ['class'] };
+            validityObv = new MutationObserver(validityObserver);
+            switch (paymentMethod) {
+                case 'Debit Card':
+                case 'Credit Card':
+                    resizeObv.disconnect();
+                    validityObv.disconnect();
+                    resizeObv.observe(document.querySelector('#error-card'), { childList: true });
+                    resizeObv.observe(document.querySelector('#error-verify-card'), { childList: true });
+                    resizeObv.observe(document.querySelector('#error-card-date'), { childList: true });
+                    validityObv.observe(document.querySelector('#ccnum'), validityConfig);
+                    validityObv.observe(document.querySelector('#verifyccnum'), validityConfig);
+                    validityObv.observe(document.querySelector('#expDate'), validityConfig);
+                    break;
+                case 'ACH/EFT':
+                    resizeObv.disconnect();
+                    validityObv.disconnect();
+                    resizeObv.observe(document.querySelector('#error-route'), { childList: true });
+                    resizeObv.observe(document.querySelector('#error-verify-route'), { childList: true });
+                    resizeObv.observe(document.querySelector('#error-acct'), { childList: true });
+                    resizeObv.observe(document.querySelector('#error-verify-acct'), { childList: true });
+                    validityObv.observe(document.querySelector('#routingNum'), validityConfig);
+                    validityObv.observe(document.querySelector('#verifyRoutingNum'), validityConfig);
+                    validityObv.observe(document.querySelector('#accountNum'), validityConfig);
+                    validityObv.observe(document.querySelector('#verifyAccountNum'), validityConfig);
+                    break;
+                default:
+                    resizeObv.disconnect();
+                    validityObv.disconnect();
+                    break;
+            }
+
+        }
+
+        function validityObserver(mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+                const mut = mutations[i];
+                if (mut.type === 'attributes' && mut.attributeName === 'class') {
+                    debounce(sendValidityMessage(), 750);
+                }
+            }
+        }
+
+        function resizeObserver(mutations) {
+            debounce(sendResizeMessage(document.referrer), 750);
+        }
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+    </script>
 </body>
 
 </html>
-<script type='text/javascript'>
-
-  let configOpts = {};
-  let augmented = false;
-  let paymentMethod = '';
-  let resizeObv;
-  let validityObv;
-  window.addEventListener('message', receiveMessage, false);
-  function receiveMessage(event) {
-    if (!isValidDomain(event.origin) || event.source !== parent) {
-      return;
-    }
-    const message = JSON.parse(event.data);
-    let payMethod = message.PaymentMethod;
-    if (payMethod != null) {
-      resetFields();
-      updatePaymentFieldsShown(payMethod, augmented, event);
-      paymentMethod = payMethod;
-      if (augmented) {
-        buildObservers(payMethod);
-      }
-    }
-    else if (message.MagicWrighterUrl != null) {
-      const type = message.Type;
-      if (type != null && type === 'ACH/EFT') {
-        handleBankAccount(event);
-      }
-      else if (type != null && (type === 'Credit Card' || type === 'Debit Card')) {
-        handleCard(event);
-      }
-    }
-  }
-
-  function handleBankAccount(event) {
-    if (!validateBankAccount()) {
-      return;
-    }
-
-    const accountNumber = document.getElementById('accountNum').value;
-    const tokenizeBankAccountNumber = executeMWPost(accountNumber, 'accountnumber', event.data);
-    parent.postMessage(tokenizeBankAccountNumber, event.origin);
-
-    const routingNumber = document.getElementById('routingNum').value;
-    const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
-    parent.postMessage(tokenizeRoutingNumber, event.origin);
-  }
-
-  function validateBankAccount() {
-    let isValid = true;
-    if (!validateRoutingNumber() || !validateMatchingRoutingNumber(true)
-      || !validateAccountNumber() || !validateMatchingAccountNumber(true)) {
-      isValid = false;
-    }
-    return isValid;
-  }
-
-  function validateRoutingNumber(routingElementId, routingErrElementId) {
-    const routingNumberElem = routingElementId === undefined ? document.getElementById('routingNum') : document.getElementById(routingElementId);
-    const errorRoute = routingErrElementId === undefined ? document.getElementById('error-route') : document.getElementById(routingErrElementId);
-    let isValid = true;
-    let msg = '';
-    if (routingNumberElem.value.length !== 9 && (isValid || augmented)) {
-      msg = augmented ? 'Number must be a valid routing number' : 'Routing # must be a length of 9';
-      isValid = false;
-    }
-    addError(errorRoute, msg);
-    if (augmented) {
-      checkInputValidity(routingNumberElem, errorRoute);
-    }
-    return isValid;
-  }
-
-  function validateMatchingRoutingNumber(forceValidation) {
-    const routingNumberElem = document.getElementById('routingNum');
-    const verifyRoutingNumberElem = document.getElementById('verifyRoutingNum');
-    const errorRoute = augmented ? document.getElementById('error-verify-route') : document.getElementById('error-route');
-    let msg = '';
-    let isValid = true;
-    if ((forceValidation || verifyRoutingNumberElem.value !== '')
-      && routingNumberElem.value !== verifyRoutingNumberElem.value
-      && (isValid || augmented)) {
-      msg = augmented ? 'The routing numbers you entered do not match. Please re-enter your routing number.'
-        : 'Routing # does not match.  Verify both numbers are correct.';
-      isValid = false;
-    }
-    let routingMismatch = document.getElementById('routing-mismatch');
-    if (routingMismatch !== null) {
-      routingMismatch.outerHTML = '';
-    }
-    addError(errorRoute, msg, 'routing-mismatch');
-    if (augmented) {
-      checkInputValidity(verifyRoutingNumberElem, errorRoute);
-    }
-    return isValid;
-  }
-
-  function validateAccountNumber(acctElementId, acctErrElementId) {
-    const accountNumberElem = acctElementId === undefined ? document.getElementById('accountNum') : document.getElementById(acctElementId);
-    const errorAccount = acctErrElementId === undefined ? document.getElementById('error-acct') : document.getElementById(acctErrElementId);
-    let msg = '';
-    let isValid = true;
-    if ((accountNumberElem.value.length < 4 || accountNumberElem.value.length > 17) && (isValid || augmented)) {
-      msg = augmented ? 'Number must be a valid account number' : 'Account # must be between 4 and 17 characters';
-      isValid = false;
-    }
-    addError(errorAccount, msg);
-    if (augmented) {
-      checkInputValidity(accountNumberElem, errorAccount);
-    }
-    return isValid;
-  }
-
-  function validateMatchingAccountNumber(forceValidation) {
-    const accountNumberElem = document.getElementById('accountNum');
-    const verifiedAccountNumberElem = document.getElementById('verifyAccountNum');
-    const errorAccount = augmented ? document.getElementById('error-verify-acct') : document.getElementById('error-acct');
-    let msg = '';
-    let isValid = true;
-    if ((forceValidation || verifiedAccountNumberElem.value !== '')
-      && accountNumberElem.value !== verifiedAccountNumberElem.value
-      && (isValid || augmented)) {
-      msg = augmented ? 'The account numbers you entered do not match. Please re-enter your account number.'
-        : 'Account # does not match.  Verify both numbers are correct.';
-      isValid = false;
-    }
-    let acctMismatch = document.getElementById('acct-mismatch');
-    if (acctMismatch !== null) {
-      acctMismatch.outerHTML = '';
-    }
-    addError(errorAccount, msg, 'acct-mismatch');
-    if (augmented) {
-      checkInputValidity(verifiedAccountNumberElem, errorAccount);
-    }
-    return isValid;
-  }
-
-  function handleCard(event) {
-    if (!validateCard()) {
-      return;
-    }
-    const cardNumber = document.getElementById('ccnum').value.replace(/-/g, '');
-    const response = executeMWPost(cardNumber, 'cc', event.data);
-    parent.postMessage(response, event.origin);
-  }
-
-  function validateCard() {
-    let isValid = true;
-    if (!validateCardType() || !validateCardNumber(true) || !validateCardExpDate()) {
-      isValid = false;
-    }
-    return isValid;
-  }
-
-  function validateCardType(cardElementId, cardErrElementId) {
-    const cardNumberOrigElem = cardElementId === undefined ? document.getElementById('ccnum') : document.getElementById(cardElementId);
-    const cardNumber = cardNumberOrigElem.value.replace(/-/g, '');
-    const cardType = getCardType();
-    const errorCard = cardErrElementId === undefined ? document.getElementById('error-card') : document.getElementById(cardErrElementId);
-    let isValid = true;
-    let msg = '';
-    if (cardType === '' && (isValid || augmented)) {
-      msg = augmented ? 'Please enter a valid Card Number' : 'Card type not accepted. Accepted card types are Discover, Mastercard, and Visa.';
-      isValid = false;
-    }
-    if ((cardType === 'visa' && (cardNumber.length < 13 || cardNumber.length > 19)) && (isValid || augmented)) {
-      msg = augmented ? 'Please enter a valid Card Number' : 'Visa card # must be between 13 and 19 digits';
-      isValid = false;
-    }
-    if ((cardType === 'mastercard' && cardNumber.length !== 16) && (isValid || augmented)) {
-      msg = augmented ? 'Please enter a valid Card Number' : 'Mastercard card # must be 16 digits';
-      isValid = false;
-    }
-    if ((cardType === 'discover' && (cardNumber.length < 16 || cardNumber.length > 19)) && (isValid || augmented)) {
-      msg = augmented ? 'Please enter a valid Card Number' : 'Discover card # must between 16 and 19 digits';
-      isValid = false;
-    }
-    addError(errorCard, msg);
-    if (augmented) {
-      checkInputValidity(cardNumberOrigElem, errorCard);
-    }
-    return isValid;
-  }
-
-  function validateCardNumber(forceValidation) {
-    const cardNumberOrigElem = document.getElementById('ccnum');
-    const verifiedCardNumberOrigElem = document.getElementById('verifyccnum');
-    const cardNumber = cardNumberOrigElem.value.replace(/-/g, '');
-    const verifiedCardNumber = verifiedCardNumberOrigElem.value.replace(/-/g, '');
-    const errorCard = augmented ? document.getElementById('error-verify-card') : document.getElementById('error-card');
-    let msg = '';
-    let isValid = true;
-    if ((forceValidation || verifiedCardNumber !== '')
-      && cardNumber !== verifiedCardNumber
-      && (isValid || augmented)) {
-      msg = augmented ? 'The credit or debit card numbers you entered do not match. Please re-enter your credit or debit card number.'
-        : 'Card # does not match.  Verify both numbers are correct.';
-      isValid = false;
-    }
-    let cardMismatch = document.getElementById('card-mismatch');
-    if (cardMismatch !== null) {
-      cardMismatch.outerHTML = '';
-    }
-    addError(errorCard, msg, 'card-mismatch');
-    if (augmented) {
-      checkInputValidity(verifiedCardNumberOrigElem, errorCard);
-    }
-    return isValid;
-  }
-  function validateCardExpDate() {
-    const expDateElem = document.getElementById('expDate');
-    const errorCardDate = document.getElementById('error-card-date');
-    const expDate = expDateElem.value;
-    let msg = '';
-    let isValid = true;
-    if ((expDate.length !== 4) && (isValid || augmented)) {
-      msg = 'Invalid expiration date. Must be 4 characters in MMYY format';
-      isValid = false;
-    }
-
-    let today, someday;
-    let exMonth = expDate.substr(0, 2);
-    if ((+exMonth > 12 || +exMonth < 1) && (isValid || augmented)) {
-      msg = 'Invalid Card Expiration Date';
-      isValid = false;
-    }
-    let exYear = + 2000 + +expDate.substr(2, 4);
-    today = new Date();
-    someday = new Date();
-    someday.setFullYear(exYear, +exMonth, 1);
-
-    if ((someday < today) && (isValid || augmented)) {
-      msg = augmented ? 'Value must be a date in the future' : 'Card has expired';
-      isValid = false;
-    }
-    addError(errorCardDate, msg);
-    if (augmented) {
-      checkInputValidity(expDateElem, errorCardDate);
-    }
-    return isValid;
-  }
-
-  function addError(elem, errMsg, errorDivId) {
-    if (errMsg === null || errMsg === '') {
-      return;
-    }
-    if (elem.hasChildNodes()) {
-      //Check to see if we already have the message
-      let array = Array.prototype.slice.call(elem.childNodes);
-      for (var i = 0; i < array.length; i++) {
-        if (array[i].innerHTML === errMsg) {
-          return;
-        }
-      }
-    }
-    let div = document.createElement('div');
-    if (errorDivId !== undefined && errorDivId !== null) {
-      div.setAttribute('id', errorDivId);
-    }
-    div.innerHTML = errMsg;
-    elem.appendChild(div);
-  }
-
-  function clearErrors(elemId) {
-    let errorsCleared = false;
-    const errElem = document.getElementById(elemId);
-    while (errElem.hasChildNodes()) {
-      errElem.removeChild(errElem.firstChild);
-      errorsCleared = true;
-    }
-  }
-
-  function checkInputValidity(elem, errorElem) {
-    const hasErrors = errorElem.hasChildNodes();
-    updateInputValidity(elem, !hasErrors);
-  }
-
-  function updateInputValidity(elem, isValid) {
-    //IE11 doesn't not have the force attribute on toggle
-    //Don't add the valid flag if there is no input (validation fields get false positives)
-    if (isValid && elem.value !== '') {
-      elem.classList.add('twiwae-valid');
-      elem.classList.remove('twiwae-invalid');
-    } else {
-      elem.classList.add('twiwae-invalid');
-      elem.classList.remove('twiwae-valid');
-    }
-  }
-
-  function executeMWPost(bankOrCardInfo, type, message) {
-    const jsonMessage = JSON.parse(message);
-
-    const authToken = jsonMessage.AuthToken;
-    const billingID = jsonMessage.BillingId;
-
-    let http = new XMLHttpRequest();
-    let tokenResponse;
-
-    try {
-      let url = jsonMessage.MagicWrighterUrl;
-      const params = '{"id":"' + billingID + '","value":"' + bankOrCardInfo + '","type":"' + type + '","frequency":"annually"}';
-      http.open('POST', url, false);
-
-      //Send the proper header information along with the request
-      http.setRequestHeader('Content-type', 'application/json');
-      http.setRequestHeader('cache-control', 'no-cache');
-      http.setRequestHeader('Authorization', 'Bearer ' + authToken);
-
-      http.onreadystatechange = function () {
-        tokenResponse = JSON.parse(http.responseText);
-      };
-      http.send(params);
-    }
-    catch (err) {
-      document.getElementById('error-token').innerHTML = 'Error during tokenization: ' + err.Message;
-    }
-    document.getElementById('error-token').innerHTML = '';
-    if (tokenResponse.error === true) {
-      document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
-    }
-    if (tokenResponse.type === 'cc') {
-      tokenResponse.ExpDate = document.getElementById('expDate').value;
-      tokenResponse.CardType = getCardType();
-    }
-    return JSON.stringify(tokenResponse);
-  }
-
-  function resetFields() {
-    document.getElementById('ccnum').value = '';
-    document.getElementById('verifyccnum').value = '';
-    document.getElementById('expDate').value = '';
-    document.getElementById('routingNum').value = '';
-    document.getElementById('verifyRoutingNum').value = '';
-    document.getElementById('accountNum').value = '';
-    document.getElementById('verifyAccountNum').value = '';
-    document.getElementById('months').selectedIndex = 0;
-    document.getElementById('years').selectedIndex = 0;
-    updateCardType();
-    clearErrors('error-card');
-    clearErrors('error-verify-card');
-    clearErrors('error-card-date');
-    clearErrors('error-acct');
-    clearErrors('error-route');
-    clearErrors('error-verify-route');
-    clearErrors('error-acct');
-    clearErrors('error-verify-acct');
-  }
-
-  function updatePaymentFieldsShown(payMethod, resize, event) {
-    let cc = document.getElementById('creditCard')
-    let eft = document.getElementById('EFT');
-    switch (payMethod) {
-      case 'Debit Card':
-      case 'Credit Card':
-        eft.style.display = 'none';
-        cc.style.display = 'block';
-        break;
-      case 'ACH/EFT':
-        cc.style.display = 'none';
-        eft.style.display = 'block';
-        break;
-      default:
-        cc.style.display = 'none';
-        eft.style.display = 'none';
-        break;
-    }
-
-    if (resize === true && augmented) {
-      sendResizeMessage(event.origin);
-    }
-  }
-
-  function sendResizeMessage(origin) {
-    const paymentBlock = document.querySelector('#body div[style="display: block;"]');
-    const divHeight = paymentBlock ? paymentBlock.offsetHeight : 0;
-    parent.postMessage({ frameHeight: divHeight }, origin);
-  }
-
-  function sendValidityMessage() {
-    let isValid = false;
-    if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
-      const validPaymentElem = document.querySelectorAll('#creditCard input.twiwae-valid');
-      isValid = validPaymentElem.length === 3;
-    } else if (paymentMethod === 'ACH/EFT') {
-      const validPaymentElem = document.querySelectorAll('#EFT input.twiwae-valid');
-      isValid = validPaymentElem.length === 4;
-    }
-    let messagePayload = { isValid: isValid };
-    if (isValid) {
-      messagePayload.accoutAbbrev = getAccountAbbreviation();
-      if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
-        messagePayload.cardIssuer = getCardType();
-      }
-    }
-    parent.postMessage(messagePayload, document.referrer);
-  }
-
-  function sendLoadedMessage() {
-    parent.postMessage({ loaded: true }, document.referrer);
-  }
-
-  function getAccountAbbreviation() {
-    let accountNum = '';
-    switch (paymentMethod) {
-      case 'Debit Card':
-      case 'Credit Card':
-        const accountNumTemp = document.getElementById('ccnum').value;
-        accountNum = accountNumTemp.length > 4 ? accountNumTemp.replace(/-/g, '') : accountNumTemp;
-        break;
-      case 'ACH/EFT':
-        accountNum = document.getElementById('accountNum').value;
-        break;
-      default:
-
-    }
-    return accountNum.slice(-4);
-  }
-
-  function getCardType() {
-    let cardNumber = document.getElementById('ccnum').value;
-
-    if (cardNumber.charAt(0) === '4') {
-      return 'visa';
-    }
-    else if (cardNumber.charAt(0) === '5' || cardNumber.charAt(0) === '2') {
-      return 'mastercard';
-    }
-    else if (cardNumber.charAt(0) === '6') {
-      return 'discover';
-    }
-    return '';
-  }
-
-  function isValidDomain(domain) {
-    return /.*(grnldev|grnl2dev|grnlpreprod|grnlprod)?\.((guidewire\.net$)|(grinnellmutual\.com$))/.test(domain)
-      || /(gmrconline\.com$)/.test(domain);
-  }
-
-  function updateCardType() {
-    const visa = document.getElementById('visa').classList;
-    const master = document.getElementById('master').classList;
-    const discover = document.getElementById('discover').classList;
-    const cardType = getCardType();
-
-    switch (cardType) {
-      case 'visa':
-        visa.remove('conceal');
-        master.add('conceal');
-        discover.add('conceal');
-        break;
-      case 'mastercard':
-        visa.add('conceal');
-        master.remove('conceal');
-        discover.add('conceal');
-        break;
-      case 'discover':
-        visa.add('conceal');
-        master.add('conceal');
-        discover.remove('conceal');
-        break;
-      default:
-        visa.add('conceal');
-        master.add('conceal');
-        discover.add('conceal');
-    }
-  }
-
-  function setExpDate() {
-    const months = document.getElementById('months');
-    const years = document.getElementById('years');
-    if (months.value === '') {
-      months.selectedIndex = new Date().getMonth() + 1;
-    }
-    if (years.value === '') {
-      years.selectedIndex = 1;
-    }
-    let expDate = document.getElementById('expDate');
-    let adjMonths = +months.value + 1;
-    let expDateVal = adjMonths.toString() + years.value;
-    expDate.value = expDateVal.length !== 4 ? '0' + expDateVal : expDateVal;
-    validateCardExpDate();
-  }
-
-  if (window.location.href) {
-    const searchOptions = location.search.substring(1);
-    if (searchOptions !== undefined && searchOptions !== null && searchOptions !== '') {
-      configOpts = JSON.parse('{"' + decodeURI(searchOptions).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
-      if (configOpts.augment && !!configOpts.augment) {
-        if (configOpts.style) {
-          const styles = configOpts.style.toString().split(',');
-          for (var i = 0; i < styles.length; i++) {
-            document.getElementById('body').classList.add(styles[i]);
-          }
-        }
-        augmented = !!configOpts.augment;
-        addCCMasks();
-        updateExpDates();
-        buildObservers();
-        limitLengths();
-        if (navigator.userAgent.indexOf('MSIE') > -1 || document.documentMode || navigator.userAgent.indexOf('Edge') > -1) {
-          //We're in IE, so remove placeholders since we can't seem to style them out
-          let inputs = document.querySelectorAll('input');
-          for (var i = 0; i < inputs.length; i++) {
-            inputs[i].removeAttribute('placeholder');
-          }
-        }
-        sendLoadedMessage();
-      }
-    }
-  };
-
-  function addCCMasks() {
-    document.getElementById('ccnum').addEventListener('keyup', ccmask);
-    document.getElementById('verifyccnum').addEventListener('keyup', ccmask);
-  }
-
-  function ccmask(event) {
-    if (!augmented) {
-      return;
-    }
-    const ele = event.target;
-    const cursorPosition = ele.selectionStart;
-    const val = ele.value.split('-').join('');
-    if (val.length > 0) {
-      const firstPart = val.substring(0, 16);
-      const lastPart = val.substring(16);
-      const before = ele.value.length;
-      ele.value = firstPart.match(/\d{1,4}/g).join('-') + lastPart;
-      const after = ele.value.length;
-      if (before >= after) {
-        ele.selectionStart = cursorPosition;
-        ele.selectionEnd = cursorPosition;
-      }
-    }
-    //Edge keyup events stop onchange events from firing
-    if (navigator.userAgent.indexOf('Edge') > -1) {
-      event.target.dispatchEvent(new Event('change'));
-    }
-  }
-
-  function limitLengths() {
-    //Limit character lengths on card entry
-    document.getElementById('ccnum').setAttribute('maxlength', '22');
-    document.getElementById('verifyccnum').setAttribute('maxlength', '22');
-  }
-
-  function updateExpDates() {
-    let months = document.getElementById('months');
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
-    for (var i = 0; i < monthNames.length; i++) {
-      var opt = document.createElement('option');
-      //padStart isn't supported by IE11, so we're left with this
-      if (i.toString().length === 1) {
-        opt.value = '0' + i.toString();
-      } else {
-        opt.value = i.toString();
-      }
-      opt.innerHTML = monthNames[i];
-      months.appendChild(opt);
-    }
-
-    let years = document.getElementById('years');
-    const currentYear = new Date().getFullYear();
-    for (var i = currentYear; i < currentYear + 10; i++) {
-      var opt = document.createElement('option');
-      opt.value = i.toString().substr(-2);
-      opt.innerHTML = i;
-      years.appendChild(opt);
-    }
-  }
-
-  function buildObservers(paymentMethod) {
-    const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    resizeObv = new MutationObserver(resizeObserver);
-    const validityConfig = { attributes: true, attributeFilter: ['class'] };
-    validityObv = new MutationObserver(validityObserver);
-    switch (paymentMethod) {
-      case 'Debit Card':
-      case 'Credit Card':
-        resizeObv.disconnect();
-        validityObv.disconnect();
-        resizeObv.observe(document.querySelector('#error-card'), { childList: true });
-        resizeObv.observe(document.querySelector('#error-verify-card'), { childList: true });
-        resizeObv.observe(document.querySelector('#error-card-date'), { childList: true });
-        validityObv.observe(document.querySelector('#ccnum'), validityConfig);
-        validityObv.observe(document.querySelector('#verifyccnum'), validityConfig);
-        validityObv.observe(document.querySelector('#expDate'), validityConfig);
-        break;
-      case 'ACH/EFT':
-        resizeObv.disconnect();
-        validityObv.disconnect();
-        resizeObv.observe(document.querySelector('#error-route'), { childList: true });
-        resizeObv.observe(document.querySelector('#error-verify-route'), { childList: true });
-        resizeObv.observe(document.querySelector('#error-acct'), { childList: true });
-        resizeObv.observe(document.querySelector('#error-verify-acct'), { childList: true });
-        validityObv.observe(document.querySelector('#routingNum'), validityConfig);
-        validityObv.observe(document.querySelector('#verifyRoutingNum'), validityConfig);
-        validityObv.observe(document.querySelector('#accountNum'), validityConfig);
-        validityObv.observe(document.querySelector('#verifyAccountNum'), validityConfig);
-        break;
-      default:
-        resizeObv.disconnect();
-        validityObv.disconnect();
-        break;
-    }
-
-  }
-
-  function validityObserver(mutations) {
-    for (var i = 0; i < mutations.length; i++) {
-      const mut = mutations[i];
-      if (mut.type === 'attributes' && mut.attributeName === 'class') {
-        debounce(sendValidityMessage(), 750);
-      }
-    }
-  }
-
-  function resizeObserver(mutations) {
-    debounce(sendResizeMessage(document.referrer), 750);
-  }
-
-  function debounce(func, wait, immediate) {
-    var timeout;
-    return function () {
-      var context = this, args = arguments;
-      var later = function () {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      var callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
-    };
-  };
-</script>
