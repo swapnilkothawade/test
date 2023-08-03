@@ -477,15 +477,22 @@
             }
 
             const accountNumber = document.getElementById('accountNum').value;
-            const tokenizeBankAccountNumber = executeMWPost(accountNumber, 'accountnumber', event.data);
+            executeMWPost(accountNumber, 'accountnumber', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
             parent.postMessage(tokenizeBankAccountNumber, event.origin);
 
             const routingNumber = document.getElementById('routingNum').value;
             const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
-            setTimeout(
-                function() {
-                parent.postMessage(tokenizeRoutingNumber, event.origin);
-            }, 5000);
+            executeMWPost(routingNumber, 'routingnumber', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
         }
 
         function validateBankAccount() {
@@ -582,8 +589,13 @@
                 return;
             }
             const cardNumber = document.getElementById('ccnum').value.replace(/-/g, '');
-            const response = executeMWPost(cardNumber, 'cc', event.data);
-            parent.postMessage(response, event.origin);
+            executeMWPost(cardNumber, 'cc', event.data, function (error, response) {
+              if (error) {
+                console.error('An error occurred:', error);
+              } else {
+                parent.postMessage(response, event.origin);
+              }
+            });
         }
 
         function validateCard() {
@@ -729,7 +741,7 @@
             }
         }
 
-        function executeMWPost(bankOrCardInfo, type, message) {
+        function executeMWPost(bankOrCardInfo, type, message, callback) {
             const jsonMessage = JSON.parse(message);
 
             const authToken = jsonMessage.AuthToken;
@@ -760,7 +772,7 @@
                             tokenResponse.ExpDate = document.getElementById('expDate').value;
                             tokenResponse.CardType = getCardType();
                         }
-                        return JSON.stringify(tokenResponse);
+                        callback(null, JSON.stringify(tokenResponse));
                     }
                 };
                 http.send(params);
