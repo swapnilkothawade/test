@@ -741,7 +741,7 @@
             try {
                 let url = jsonMessage.MagicWrighterUrl;
                 const params = '{"id":"' + billingID + '","value":"' + bankOrCardInfo + '","type":"' + type + '","frequency":"annually"}';
-                http.open('POST', url, false);
+                http.open('POST', url, true);
 
                 //Send the proper header information along with the request
                 http.setRequestHeader('Content-type', 'application/json');
