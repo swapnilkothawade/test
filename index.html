@@ -416,9 +416,6 @@
   let validityObv;
   window.addEventListener('message', receiveMessage, false);
   function receiveMessage(event) {
-    if (!isValidDomain(event.origin) || event.source !== parent) {
-      return;
-    }
     const message = JSON.parse(event.data);
     let payMethod = message.PaymentMethod;
     if (payMethod != null) {
