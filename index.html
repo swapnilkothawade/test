@@ -1,3 +1,4 @@
+
 <html>
 
 <head>
@@ -6,326 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="-1">
   <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
-  <style>
-    @font-face {
-        font-family: 'Source Sans Pro';
-        src: url('./fonts/EOT/SourceSansPro-Light.eot') format('embedded-opentype'), url('./fonts/WOFF/OTF/SourceSansPro-Light.otf.woff') format('woff'), url('./fonts/OTF/SourceSansPro-LightIt.otf') format('opentype'), url('./fonts/TTF/SourceSansPro-Light.ttf') format('truetype');
-        font-style: normal;
-        font-stretch: normal;
-        font-weight: 300;
-    }
-    
-    @font-face {
-        font-family: 'Source Sans Pro';
-        src: url('./fonts/EOT/SourceSansPro-Regular.eot') format('embedded-opentype'), url('./fonts/WOFF/OTF/SourceSansPro-Regular.otf.woff') format('woff'), url('./fonts/OTF/SourceSansPro-Regular.otf') format('opentype'), url('./fonts/TTF/SourceSansPro-Regular.ttf') format('truetype');
-        font-style: normal;
-        font-stretch: normal;
-        font-weight: 400;
-    }
-    
-    @font-face {
-        font-family: 'Open Sans';
-        src: url('./fonts/WOFF/OpenSans-Regular.woff') format('woff'), url('./fonts/TTF/OpenSans-Regular.ttf') format('truetype');
-        font-style: normal;
-        font-stretch: normal;
-        font-weight: 400;
-    }
-    
-    html {
-        font-size: 15px;
-        font-family: "Open Sans", helvetica, sans-serif;
-    }
-    
-    .inputError{
-        color: red;
-    }
-    
-    label{
-        display:inline-block;
-        width:140px;
-        margin-right:10px;
-        min-width:45px;
-        min-height: 25px;
-        padding-top: 4px;
-        padding-left: 3px;
-        padding-right:1px;
-        color: #333a3f;
-        font-size: 13px;
-        font-family: "Open Sans", helvetica, sans-serif;
-    }
-    
-    #EFT{
-        display: none;
-    }
-    
-    #creditCard{
-        display: none;              
-    }
-    
-    #months, #years {
-        display: none;
-    }
-    
-    .cc{
-        color: #333B14;
-        min-height: 23px;
-    }
-    
-    .routing{
-        width:100px;
-    }
-    
-    .account{
-        width:150px;
-    }
-    
-    .expDate{
-        width:65px;
-    }
-    
-    .conceal {
-        opacity: .15;
-    }
-    
-    input[type='number']::-webkit-outer-spin-button, input[type='number']::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    
-    input {
-        color: #333a3f;
-        padding: 3px;
-        background-color: #f4f3f0;
-        font: normal 13px/17px 'Open Sans', helvetica, sans-serif;
-        min-height: 23px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: silver;
-        border-top-color: silver;
-        border-right-color: silver;
-        border-bottom-color: silver;
-        border-left-color: silver;
-        margin-bottom: .5%;
-    }
-    
-    div.card-corral {
-        width: 62.5%;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    
-    .mdrn {
-        margin: 0 auto;
-        font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
-        overflow: hidden;
-    }
-    
-    .mdrn label {
-        font-size: 0;
-    }
-    
-    .mdrn label:after {
-        content: "*";
-        margin-left: 5px;
-        color: red;
-        font-size: 15px;
-    }
-    
-    .mdrn input {
-        font-size: 10px;
-    }
-    
-    .mdrn input:focus {
-        box-shadow: 0 0 5px #51cbee;
-        border: 1px solid #51cbee;
-    }
-    
-    .mdrn input::placeholder {
-        color: transparent;
-    }
-    
-    .mdrn input::-ms-input-placeholder {
-        color: transparent;
-    }
-    
-    .mdrn input:-ms-input-placeholder {
-        color: transparent;
-    }
-    
-    .mdrn label[for="fname"]:before {
-        content: "Card Issuer";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="ccnum"]:before {
-        content: "Card number";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="verifyccnum"]:before {
-        content: "Verify Card number";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="expDate"]:before {
-        content: "Expiration Date";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="routingNum"]:before {
-        content: "Routing (ABA) Number";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="verifyRoutingNum"]:before {
-        content: "Verify Routing (ABA) Number";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="accountNum"]:before {
-        content: "Account Number";
-        font-size: 15px;
-    }
-    
-    .mdrn label[for="verifyAccountNum"]:before {
-        content: "Verify Account Number";
-        font-size: 15px;
-    }
-    
-    .mdrn label, .mdrn input, .mdrn select {
-        font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
-        line-height: 1.5;
-        text-align: left;
-    }
-    
-    .mdrn .inputError {
-        color: #b94a48;
-        width: 62.5%;
-        position: relative;
-        left: 34%;
-        font-weight: 600;
-        font-size: 14px;
-    }
-    
-    .mdrn.shftr .inputError {
-        width: 59.3%;
-        left: 41%;
-    }
-    
-    .mdrn .conceal {
-        display: none;
-    }
-    
-    .mdrn .col-50 label {
-        width: 33%;
-        color: #848484;
-        margin: 0 0 4px 0;
-        word-wrap: break-word;
-        padding-left: 0;
-    }
-    
-    .mdrn.shftr .col-50 label {
-        width: 40%;
-    }
-    
-    .mdrn .col-50 input {
-        height: 40px;
-        width: 62.5%;
-        color: #373737;
-        margin: 5px 1px 3px 0;
-        padding: 3px 0 3px 3px;
-        outline: none;
-        border: 1px solid #DDDDDD;
-        background-color: #fff;
-        box-shadow: inset 0 1px 3px #ddd;
-        border-radius: 4px;
-        font-size: 15px;
-    }
-    
-    .mdrn.shftr .col-50 input {
-        width: 59%;
-        margin-left: 5px;
-    }
-    
-    .mdrn div.row {
-        padding: 0 0 1.5em 0;
-        width: 100%;
-        height: auto;
-    }
-    
-    .mdrn.shftr div.card-corral {
-        width: 59%;
-        margin-left: 5px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    
-    .mdrn #expDate {
-        display: none;
-    }
-    
-    .mdrn #months, .mdrn #years {
-        display: inline-block;
-    }
-    
-    .mdrn #error-token {
-        display: none;
-    }
-    
-    .mdrn select#months, .mdrn select#years {
-        height: 40px;
-        width: 22.5%;
-        color: #373737;
-        margin: 5px 1% 3px 0;
-        padding: 3px 0 3px 3px;
-        outline: none;
-        border: 1px solid #DDDDDD;
-        background-color: #fff;
-        box-shadow: inset 0 1px 3px #ddd;
-        border-radius: 4px;
-        font-size: 15px;
-    }
-    
-    .mdrn.shftr select#months {
-        margin-left: 5px;
-    }
-    
-    @media only screen and (max-width: 996px) {
-        .mdrn.shftr .col-50 label {
-            width: 33%;
-        }
-        .mdrn.shftr .col-50 input, .mdrn.shftr div.card-corral {
-            float: right;
-            clear: both;
-        }
-        .mdrn.shftr select#months {
-            margin-left: 7.5%;
-            clear: both;
-        }
-        .mdrn.shftr .col-50 .row .inputError {
-            clear: both;
-        }
-    }
-    
-    @media only screen and (max-width: 669px) {
-        .mdrn .col-50 label, .mdrn .col-50 input, .mdrn.shftr .col-50 label, .mdrn.shftr .col-50 input {
-            width: 100%;
-        }
-        .mdrn.shftr .col-50 input, .mdrn.shftr div.card-corral {
-            margin-left: 0;
-            float: left; /* IE doesn't have unset, so move it left first */
-            float: unset;
-        }
-        .mdrn select#months, .mdrn select#years, .mdrn.shftr select#months, .mdrn.shftr select#years {
-            width: 45%;
-            margin-left: 0;
-        }
-        .mdrn .col-50 .row .inputError, .mdrn.shftr .col-50 .row .inputError {
-            left: 1%;
-            width: 100%;
-        }
-    }
-    </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 
@@ -404,9 +86,6 @@
       </div>
     </div>
   </div>
-</body>
-
-</html>
 <script type='text/javascript'>
 
   let configOpts = {};
@@ -416,6 +95,9 @@
   let validityObv;
   window.addEventListener('message', receiveMessage, false);
   function receiveMessage(event) {
+    if (!isValidDomain(event.origin) || event.source !== parent) {
+      return;
+    }
     const message = JSON.parse(event.data);
     let payMethod = message.PaymentMethod;
     if (payMethod != null) {
@@ -443,12 +125,18 @@
     }
 
     const accountNumber = document.getElementById('accountNum').value;
-    const tokenizeBankAccountNumber = executeMWPost(accountNumber, 'accountnumber', event.data);
-    parent.postMessage(tokenizeBankAccountNumber, event.origin);
+    executeMWPost(accountNumber, 'accountnumber', event.data, function (error, response) {
+      if (error) {} else {
+        parent.postMessage(response, event.origin);
+      }
+    });
 
     const routingNumber = document.getElementById('routingNum').value;
-    const tokenizeRoutingNumber = executeMWPost(routingNumber, 'routingnumber', event.data);
-    parent.postMessage(tokenizeRoutingNumber, event.origin);
+    executeMWPost(routingNumber, 'routingnumber', event.data, function (error, response) {
+      if (error) {} else {
+        parent.postMessage(response, event.origin);
+      }
+    });
   }
 
   function validateBankAccount() {
@@ -540,14 +228,17 @@
     return isValid;
   }
 
-  function handleCard(event) {
-    if (!validateCard()) {
-      return;
-    }
-    const cardNumber = document.getElementById('ccnum').value.replace(/-/g, '');
-    const response = executeMWPost(cardNumber, 'cc', event.data);
-    parent.postMessage(response, event.origin);
-  }
+	function handleCard(event) {
+	    if (!validateCard()) {
+	        return;
+	    }
+	    const cardNumber = document.getElementById('ccnum').value.replace(/-/g, '');
+	    executeMWPost(cardNumber, 'cc', event.data, function (error, response) {
+	      if (error) {} else {
+	        parent.postMessage(response, event.origin);
+	      }
+	    });
+	}
 
   function validateCard() {
     let isValid = true;
@@ -692,8 +383,8 @@
     }
   }
 
-  function executeMWPost(bankOrCardInfo, type, message) {
-    const jsonMessage = JSON.parse(message);
+        function executeMWPost(bankOrCardInfo, type, message, callback) {
+            const jsonMessage = JSON.parse(message);
 
     const authToken = jsonMessage.AuthToken;
     const billingID = jsonMessage.BillingId;
@@ -702,9 +393,9 @@
     let tokenResponse;
 
     try {
-      let url = jsonMessage.MagicWrighterUrl;
-      const params = '{"id":"' + billingID + '","value":"' + bankOrCardInfo + '","type":"' + type + '","frequency":"annually"}';
-      http.open('POST', url, false);
+        let url = jsonMessage.MagicWrighterUrl;
+        const params = '{"id":"' + billingID + '","value":"' + bankOrCardInfo + '","type":"' + type + '","frequency":"annually"}';
+        http.open('POST', url, true);
 
       //Send the proper header information along with the request
       http.setRequestHeader('Content-type', 'application/json');
@@ -712,22 +403,26 @@
       http.setRequestHeader('Authorization', 'Bearer ' + authToken);
 
       http.onreadystatechange = function () {
-        tokenResponse = JSON.parse(http.responseText);
-      };
-      http.send(params);
+            if (http.readyState === XMLHttpRequest.DONE) {
+                tokenResponse = JSON.parse(http.responseText);
+                        
+                document.getElementById('error-token').innerHTML = '';
+                if (tokenResponse.error === true) {
+                    document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
+                    callback(tokenResponse.error, null);
+                }
+                if (tokenResponse.type === 'cc') {
+                    tokenResponse.ExpDate = document.getElementById('expDate').value;
+                    tokenResponse.CardType = getCardType();
+                }
+                callback(null, JSON.stringify(tokenResponse));
+            }
+        };
+        http.send(params);
     }
     catch (err) {
-      document.getElementById('error-token').innerHTML = 'Error during tokenization: ' + err.Message;
+        document.getElementById('error-token').innerHTML = 'Error during tokenization: ' + err.Message;
     }
-    document.getElementById('error-token').innerHTML = '';
-    if (tokenResponse.error === true) {
-      document.getElementById('error-token').innerHTML = 'Error during tokenization. Please retry or contact support.';
-    }
-    if (tokenResponse.type === 'cc') {
-      tokenResponse.ExpDate = document.getElementById('expDate').value;
-      tokenResponse.CardType = getCardType();
-    }
-    return JSON.stringify(tokenResponse);
   }
 
   function resetFields() {
@@ -837,8 +532,7 @@
   }
 
   function isValidDomain(domain) {
-    return /.*(grnldev|grnl2dev|grnlpreprod|grnlprod)?\.((guidewire\.net$)|(grinnellmutual\.com$))/.test(domain)
-      || /(gmrconline\.com$)/.test(domain);
+    return true;
   }
 
   function updateCardType() {
@@ -967,7 +661,7 @@
 
     let years = document.getElementById('years');
     const currentYear = new Date().getFullYear();
-    for (var i = currentYear; i < currentYear + 10; i++) {
+    for (var i = currentYear; i < currentYear + 20; i++) {
       var opt = document.createElement('option');
       opt.value = i.toString().substr(-2);
       opt.innerHTML = i;
@@ -1040,3 +734,6 @@
     };
   };
 </script>
+</body>
+
+</html>
